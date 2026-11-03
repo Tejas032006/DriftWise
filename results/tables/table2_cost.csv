@@ -1,0 +1,5 @@
+,balanced_acc,updates,models_trained,gate_tests,validation_labels_used,seconds
+Retrain once at the alarm,0.742810363882103,1.0,2.0,0.0,0.0,0.06730870555002179
+"Retrain once, 300 later",0.7716904047953489,1.0,2.0,0.0,0.0,0.07192290339999086
+"Retrain at alarm, +300, +600",0.774466125125335,3.0,4.0,0.0,0.0,0.07597926465001589
+"Gated, keep improving (v2)",0.7751689405655962,1.65,16.6,15.6,6240.0,0.15125815315001317

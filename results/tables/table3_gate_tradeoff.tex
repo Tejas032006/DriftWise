@@ -1,0 +1,18 @@
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & balanced_acc & worst_class_recall & n_updates & models_trained & accepts /1000 checks & harmful accepts /1000 checks & % streams with harmful accept \\
+gate &  &  &  &  &  &  &  \\
+\midrule
+sequential, alpha=0.01 & 0.771 & 0.717 & 1.550 & 16.250 & 20.600 & 0.600 & 0.500 \\
+sequential, alpha=0.05 & 0.775 & 0.713 & 1.650 & 16.600 & 31.200 & 1.200 & 1.000 \\
+sequential, alpha=0.2 & 0.775 & 0.711 & 1.700 & 16.600 & 51.200 & 1.200 & 1.000 \\
+sequential, alpha=0.5 & 0.776 & 0.714 & 1.800 & 16.900 & 80.000 & 2.500 & 2.000 \\
+sequential, alpha=0.9 & 0.784 & 0.732 & 2.150 & 17.800 & 106.200 & 7.500 & 6.000 \\
+point, margin=0 & 0.795 & 0.748 & 4.700 & 22.900 & 335.600 & 58.800 & 33.000 \\
+point, margin=0.01 & 0.793 & 0.742 & 3.200 & 19.500 & 222.500 & 23.100 & 15.000 \\
+point, margin=0.02 & 0.792 & 0.738 & 2.850 & 18.550 & 156.200 & 13.800 & 10.000 \\
+point, margin=0.03 & 0.789 & 0.743 & 2.550 & 18.500 & 96.200 & 7.500 & 5.000 \\
+point, margin=0.05 & 0.785 & 0.738 & 2.000 & 17.900 & 51.900 & 0.600 & 0.500 \\
+point, margin=0.08 & 0.774 & 0.705 & 1.550 & 16.700 & 18.100 & 0.000 & 0.000 \\
+\bottomrule
+\end{tabular}

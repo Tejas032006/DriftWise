@@ -1,0 +1,13 @@
+seed,method,updates,models trained,ALL bal_acc,DRIFT bal_acc,DRIFT attack_recall
+42,never update,0,1,0.968,0.949,0.911
+42,"periodic (every 10,000, newest 50,000)",15,16,0.974,0.969,0.957
+42,EGA v2: sequential gate (alpha=0.05),7,149,0.973,0.97,0.969
+42,"EGA v2: point rule, margin=0",25,159,0.973,0.972,0.972
+42,"EGA v2: point rule, margin=0.01",12,157,0.975,0.971,0.964
+42,"EGA v2: point rule, margin=0.02",4,169,0.976,0.978,0.985
+7,never update,0,1,0.957,0.918,0.848
+7,"periodic (every 10,000, newest 50,000)",15,16,0.967,0.968,0.955
+7,EGA v2: sequential gate (alpha=0.05),7,157,0.976,0.971,0.964
+7,"EGA v2: point rule, margin=0",18,125,0.977,0.973,0.975
+7,"EGA v2: point rule, margin=0.01",10,161,0.976,0.973,0.966
+7,"EGA v2: point rule, margin=0.02",5,159,0.976,0.971,0.963

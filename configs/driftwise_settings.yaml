@@ -1,0 +1,81 @@
+# DriftWise: settings used in the experiments.
+# This file is a RECORD of the settings (for the paper and for reproducibility).
+# The notebooks and src/ code do not read it; the same values are written inside the code.
+
+project: DriftWise
+framing: "evaluation study of gated model adaptation for intrusion detection under drift"
+
+seeds:
+  synthetic_main_comparison: "10-39 (30 fresh seeds)"
+  synthetic_cost_and_ablations: "10-29 (20 seeds)"
+  arf_baseline: "10-19 (10 seeds)"
+  no_drift_safety_streams: "0-199 (200 streams); ground truth from 20,000 fresh records each"
+  real_data_model_random_seeds: [42, 7, 123]    # SGD randomness only; the real stream is one fixed sequence
+
+synthetic_streams:
+  records: 10000
+  drift_point: 5000
+  attack_rate_before: 0.05
+  attack_rate_after: 0.20
+  attack_signal_shift: 2.0
+  features: 2
+  pattern_drift: "attack signal moves from feature_1 to feature_2 at the drift point; attack rate also rises"
+  rate_only: "attack rate rises, pattern stays in feature_1 (nothing to fix)"
+  gradual_drift: {start: 5000, width: 2000, attack_rate: "0.05 rising to 0.20"}
+  no_drift_safety_test: {records: 6000, attack_rate: 0.05, candidate_training_records: 1000, current_model_training_records: 3000, validation_block: 1000, gap: 50, checks_per_stream: 8}
+
+model:
+  classifier: "SGDClassifier(loss=log_loss, class_weight=balanced, random_state=42) after StandardScaler"
+  initial_training_records_synthetic: 4000
+  incremental_update: {epochs: 5, class_weight: "recomputed from the update batch"}
+
+drift_detection:
+  detector: "ADWIN (river), delta 0.002"
+  synthetic: "one detector on the overall prediction error"
+  real_data: "two detectors, one on missed attacks and one on false alarms; only alarms where errors rose count"
+  real_data_direction_check_windows: {attack_stream: 300, normal_stream: 3000}
+
+ega_v2_synthetic:
+  chunk: 50
+  gate_every_labels: 100
+  episode_timeout_T: 1500
+  validation_block: 400
+  gap: 50
+  severity_threshold: 0.06        # below this, only the incremental candidate is tried
+  candidates: {short_window: 300, long_window: 600, incremental_batch: 300}
+  patience: 3                     # looks with no further accept before the episode ends
+  alpha_total: 0.05               # divided by the number of candidates tried at a look
+
+sequential_gate:
+  alpha_total: 0.05
+  alpha_per_look: "alpha_total * 6 / (pi^2 * look^2)"
+  min_validation_records: 200
+  min_records_per_class: 30
+  overall_tolerance_balanced_accuracy: 0.01   # lower bound of the difference must exceed -0.01
+  worst_class_tolerance: 0.03                 # worst class of the CURRENT model; lower bound must exceed -0.03
+  min_effect: 0.0
+  cost_penalty: 0.0
+
+simple_rule_used_in_ablation:
+  rule: "accept if candidate balanced accuracy beats current by more than a margin (same evidence floor)"
+  margins_tested_synthetic: [0, 0.01, 0.02, 0.03, 0.05, 0.08]
+  margins_tested_real_data: [0, 0.01, 0.02]
+  gate_alpha_tested_synthetic: [0.01, 0.05, 0.2, 0.5, 0.9]
+  harmful_update_definition: "new model truly worse by more than 0.01 balanced accuracy (synthetic: on 20,000 fresh records; real data: on the next 10,000 rows)"
+
+baselines:
+  never_update: "frozen model"
+  retrain_at_alarm: "retrain on the newest 300 labels at each alarm (synthetic)"
+  retrain_schedules: ["alarm and +500", "alarm, +300, +600", "single retrain at +300 or +600 after the alarm"]
+  arf: "river ARFClassifier, 10 trees, seed 42; variant with each attack shown 3 times"
+
+real_data_unsw_nb15:
+  file: "UNSW_NB15_DriftWise_clean_chronological.csv.gz (exact duplicates removed: 640,788 rows)"
+  active_window: "rows 0 to 173,432 (all attacks); the remaining 467,355 rows are normal-only"
+  features: "43 (40 numeric, 3 categorical); excluded: Label, attack_cat, srcip, dstip, Stime, Ltime, Stime_UTC, Ltime_UTC"
+  preprocessing: "ports made numeric (bad values missing); signed log of numeric features; proto top 10 and state/service top 50 categories from the first slice"
+  frozen_model_training_rows: 17344
+  drift_zone_reported_from_row: 117000     # chosen after looking at the data (exploratory)
+  gate: {chunk: 1000, gate_every_labels: 1000, validation_block: 3000, gap: 500, candidates: {short: 10000, long: 30000}, timeout_T: 15000, patience: 3}
+  baselines: {periodic: "every 10,000 rows on the newest 50,000", retrain_at_alarm_windows: [20000, 30000]}
+  labels: "arrive immediately (no delay)"

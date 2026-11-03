@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+ & updates & models trained & ALL bal_acc & DRIFT bal_acc & DRIFT attack_recall & updates judged in hindsight & mean real change & harmful (< -0.01) & helpful (> +0.01) \\
+\midrule
+Never update & 0.000 & 1.000 & 0.962 & 0.933 & 0.879 & NaN & NaN & NaN & NaN \\
+Periodic retrain & 15.000 & 16.000 & 0.970 & 0.968 & 0.956 & NaN & NaN & NaN & NaN \\
+Gated: sequential gate & 7.000 & 153.000 & 0.974 & 0.970 & 0.966 & 14.000 & 0.016 & 0.000 & 7.000 \\
+Gated: simple rule, margin 0 & 21.500 & 142.000 & 0.975 & 0.972 & 0.974 & 43.000 & 0.006 & 3.000 & 6.000 \\
+Gated: simple rule, margin 0.01 & 11.000 & 159.000 & 0.976 & 0.972 & 0.965 & 22.000 & 0.011 & 2.000 & 8.000 \\
+Gated: simple rule, margin 0.02 & 4.500 & 164.000 & 0.976 & 0.974 & 0.974 & 9.000 & 0.008 & 1.000 & 4.000 \\
+\bottomrule
+\end{tabular}

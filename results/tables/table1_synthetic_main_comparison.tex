@@ -1,0 +1,18 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+ & seeds & balanced acc & +/- 95% CI & worst-class recall & +/- CI & updates \\
+method &  &  &  &  &  &  \\
+\midrule
+Never update & 30 & 0.512 & 0.023 & 0.190 & 0.048 & 0.000 \\
+Retrain once at the alarm & 30 & 0.744 & 0.025 & 0.649 & 0.055 & 0.967 \\
+Retrain once, 300 later & 30 & 0.762 & 0.015 & 0.693 & 0.024 & 0.967 \\
+Retrain once, 600 later & 30 & 0.739 & 0.012 & 0.664 & 0.028 & 0.967 \\
+Retrain once, 600 later (600 labels) & 30 & 0.757 & 0.011 & 0.682 & 0.024 & 0.967 \\
+Retrain at alarm and +500 & 30 & 0.757 & 0.026 & 0.671 & 0.054 & 1.933 \\
+Retrain at alarm, +300, +600 & 30 & 0.772 & 0.013 & 0.708 & 0.028 & 2.900 \\
+Gated, stop at first accept (v1) & 30 & 0.684 & 0.036 & 0.560 & 0.075 & 0.967 \\
+Gated, keep improving (v2) & 30 & 0.773 & 0.014 & 0.713 & 0.026 & 1.633 \\
+ARF default (10 seeds) & 10 & 0.770 & 0.009 & 0.595 & 0.017 & NaN \\
+ARF, attacks shown 3x (10 seeds) & 10 & 0.802 & 0.007 & 0.710 & 0.012 & NaN \\
+\bottomrule
+\end{tabular}

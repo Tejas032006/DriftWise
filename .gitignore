@@ -1,0 +1,10 @@
+# Large data stays in Google Drive and is NOT pushed (GitHub rejects files over 100 MB)
+data/
+*.csv.gz
+*.zip
+
+# Python and notebook junk
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store

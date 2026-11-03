@@ -1,0 +1,5 @@
+method,updates,ALL balanced_acc,ALL attack_recall,ALL normal_recall,DRIFT-ZONE balanced_acc,DRIFT-ZONE attack_recall,DRIFT-ZONE normal_recall
+never update,0,0.968,0.962,0.974,0.949,0.911,0.987
+"every 10,000 rows, newest 20,000",15,0.964,0.959,0.97,0.961,0.949,0.973
+"every 40,000 rows, newest 20,000",3,0.922,0.875,0.969,0.978,0.983,0.972
+"every 10,000 rows, newest 50,000",15,0.974,0.975,0.972,0.969,0.957,0.981
